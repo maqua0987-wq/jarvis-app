@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout code
@@ -14,18 +14,24 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.10'
 
-    - name: Install platform dependencies
+    - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential ccache git libffi-dev libssl-dev localedef zip unzip openjdk-17-jdk
+        sudo apt-get install -y build-essential ccache git libffi-dev libssl-dev localedef zip unzip openjdk-17-jdk python3-pip
+        sudo apt-get install -y autoconf automake libtool pkg-config zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
 
-    - name: Build with Buildozer
-      uses: ArtemSBulgakov/buildozer-action@v1
-      with:
-        command: buildozer android debug
-        repository_root: .
+    - name: Install Buildozer and Cython
+      run: |
+        pip install --upgrade pip
+        pip install buildozer cython==0.29.33
+
+    - name: Run Buildozer Build
+      run: |
+        buildozer android debug
+      env:
+        TERM: xterm
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
