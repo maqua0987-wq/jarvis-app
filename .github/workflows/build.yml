@@ -19,8 +19,7 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential ccache git libffi-dev libssl-dev localedef zip unzip openjdk-17-jdk python3-pip
-        sudo apt-get install -y autoconf automake libtool pkg-config zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
+        sudo apt-get install -y build-essential ccache git libffi-dev libssl-dev zip unzip openjdk-17-jdk python3-pip autoconf automake libtool pkg-config zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
 
     - name: Install Buildozer and Cython
       run: |
@@ -38,4 +37,3 @@ jobs:
       with:
         name: package-apk
         path: bin/*.apk
-        
