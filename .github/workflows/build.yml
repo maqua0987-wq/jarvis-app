@@ -26,16 +26,9 @@ jobs:
         pip install --upgrade pip
         pip install buildozer cython==0.29.33
 
-    - name: Automatically Accept Android SDK Licenses
+    - name: Run Buildozer Build (Auto-Accept Prompts)
       run: |
-        mkdir -p ~/.android
-        touch ~/.android/repositories.cfg
-        # Pre-accept all licenses by passing yes to sdkmanager
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-
-    - name: Run Buildozer Build
-      run: |
-        buildozer android debug
+        yes | buildozer android debug
       env:
         TERM: xterm
 
