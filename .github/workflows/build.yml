@@ -28,8 +28,7 @@ jobs:
 
     - name: Run Buildozer Build
       run: |
-        buildozer android debug
+        (yes || true) | buildozer android debug
       env:
         TERM: xterm
-        BUILDOZER_ACCEPT_ANDROID_LICENSES: "1"
         
