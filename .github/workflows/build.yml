@@ -19,16 +19,31 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf automake libtool pkg-config zlib1g-dev
+        sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf automake libtool pkg-config zlib1g-dev expect
 
     - name: Install Buildozer and Cython
       run: |
         pip install --upgrade pip
         pip install buildozer cython==0.29.33
 
-    - name: Run Buildozer Build
+    - name: Run Buildozer Build Safely
       run: |
-        (yes || true) | buildozer android debug
+        expect -c '
+        set timeout -1
+        spawn buildozer android debug
+        expect {
+            "Accept? (y/N)" { send "y\r"; exp_continue }
+            eof
+        }
+        catch wait result
+        exit [lindex $result 3]
+        '
       env:
         TERM: xterm
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: package-apk
+        path: bin/*.apk
         
