@@ -33,4 +33,3 @@ jobs:
         TERM: xterm
         AUTO_ACCEPT_LICENSE: "yes"
         ANDROID_LOG_TAGS: "*:S"
-        
