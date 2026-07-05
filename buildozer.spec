@@ -117,6 +117,9 @@ android.permissions = INTERNET,RECORD_AUDIO,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL
 # (int) Android SDK version to use
 #android.sdk = 20
 
+# (str) Force a stable Android Build-Tools version to prevent the version 37 license bug
+android.build_tools_version = 34.0.0
+
 # (str) Android NDK version to use
 #android.ndk = 23b
 
