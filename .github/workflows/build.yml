@@ -26,10 +26,21 @@ jobs:
         pip install --upgrade pip
         pip install buildozer cython==0.29.33
 
+    - name: Setup Android SDK and Accept Licenses
+      run: |
+        mkdir -p $HOME/android-cmdline
+        cd $HOME/android-cmdline
+        curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+        unzip commandlinetools.zip && rm commandlinetools.zip
+        mkdir -p cmdline-tools/latest
+        mv cmdline-tools/* cmdline-tools/latest/ 2>/dev/null || true
+        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+        yes | ./cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk --licenses
+
     - name: Run Buildozer Build
       run: |
-        buildozer android debug --profile
+        buildozer android debug
       env:
         TERM: xterm
-        AUTO_ACCEPT_LICENSE: "yes"
-        ANDROID_LOG_TAGS: "*:S"
+        ANDROID_SDK_HOME: /home/runner/android-sdk
+        
