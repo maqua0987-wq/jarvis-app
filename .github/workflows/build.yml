@@ -29,4 +29,8 @@ jobs:
     - name: Run Buildozer Build
       run: |
         buildozer android debug
+      env:
+        TERM: xterm
+        APP_ANDROID_BUILD_TOOLS_VERSION: "34.0.0"
+        APP_ANDROID_ACCEPT_SDK_LICENSE: "True"
         
